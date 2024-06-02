@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Page</title>
+    <link rel="stylesheet" href="img.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Images about Bangladesh</h1>
+        
+        <!-- Embedded images -->
+        <img src="image1.png" alt="Example Image" width="300" class="clickable-image" data-alert="This is the map of Bangladesh. Bangladesh is a south Asian country.">
+        <img src="flag.png" alt="Flag Image" width="300" class="clickable-image" data-alert="This is the flag of Bangladesh.">
+        <img src="tiger.jpg" alt="National Animal Image" width="300" class="clickable-image" data-alert="This is the national animal of Bangladesh.">
+
+        <!-- Link back to home page -->
+        <a href="index.html">Back to Home</a>
+    </div>
+
+    <script>
+        // Functionality to display larger image and show alert when clicked
+        var clickableImages = document.querySelectorAll('.clickable-image');
+        clickableImages.forEach(function(image) {
+            image.addEventListener('click', function() {
+                // Create a new image element
+                var enlargedImage = new Image();
+                enlargedImage.src = this.src; // Set the source to the same as the clicked image
+                enlargedImage.style.maxWidth = '100%'; // Set maximum width to fill the viewport
+                enlargedImage.style.height = 'auto'; // Maintain aspect ratio
+                enlargedImage.style.display = 'block'; // Display as block element
+                enlargedImage.style.margin = '0 auto'; // Center horizontally
+                enlargedImage.style.cursor = 'pointer'; // Add pointer cursor
+                
+                // Create a container for the enlarged image
+                var overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'; // Semi-transparent background
+                overlay.style.zIndex = '9999'; // Ensure it's on top
+                overlay.style.display = 'flex'; // Center vertically
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.appendChild(enlargedImage); // Append the enlarged image to the overlay
+                
+                // Add event listener to close the overlay when clicked
+                overlay.addEventListener('click', function() {
+                    document.body.removeChild(overlay); // Remove the overlay when clicked
+                });
+                
+                // Append the overlay to the body
+                document.body.appendChild(overlay);
+
+                // Display the alert
+                var alertMessage = this.getAttribute('data-alert');
+                alert(alertMessage);
+            });
+        });
+        window.onload = function() {
+            alert("Please Click Each Image");
+        };
+    </script>
+</body>
+</html>
